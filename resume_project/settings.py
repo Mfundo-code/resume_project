@@ -122,4 +122,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mfundoknox@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-email-password'
+EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'
+
+
+DEFAULT_FROM_EMAIL = 'mfundoknox@gmail.com'
+SERVER_EMAIL = 'mfundoknox@gmail.com'

@@ -9,7 +9,7 @@
         /* Basic styles */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #6A8CAFB0;
             margin: 0;
             padding: 0;
         }
@@ -19,62 +19,70 @@
             text-align: center;
             padding: 20px;
         }
-        h1 {
-            margin: 0;
-        }
+        h1 { margin: 0; }
 
         /* Section styling */
         section {
             padding: 20px;
-            margin: 20px;
+            margin: 20px auto;
+            max-width: 800px;
             background-color: white;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        h2 {
-            color: #34495e;
-        }
+        h2 { color: #34495e; margin-top: 0; }
 
         /* List styling */
-        ul {
+        ul { list-style: none; padding: 0; }
+        ul li { margin: 5px 0; padding: 10px; background-color: #ecf0f1; border-radius: 5px; }
+
+        /* Contact styling */
+        section#contact {
+            text-align: center;
+        }
+        section#contact ul.contact-info {
             list-style: none;
             padding: 0;
+            margin-bottom: 20px;
         }
-        ul li {
-            margin: 5px 0;
-            padding: 10px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
+        section#contact ul.contact-info li {
+            background: none;
+            padding: 5px 0;
         }
-
-        /* Contact Form */
-        form {
-            margin-top: 20px;
+        section#contact ul.contact-info li a {
+            color: #34495e;
+            text-decoration: none;
+            font-weight: bold;
         }
-        input, textarea {
+        section#contact form {
+            margin: 0 auto;
+            max-width: 600px;
+            text-align: left;
+        }
+        section#contact label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        section#contact input,
+        section#contact textarea {
             width: 100%;
             padding: 10px;
-            margin: 5px 0 20px 0;
+            margin-bottom: 15px;
             border-radius: 5px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
         }
-        input[type="submit"] {
+        section#contact input[type="submit"] {
             background-color: #34495e;
             color: white;
             border: none;
             cursor: pointer;
+            width: auto;
+            padding: 10px 20px;
         }
-
-        input[type="submit"]:hover {
+        section#contact input[type="submit"]:hover {
             background-color: #27ae60;
-        }
-
-        /* Map */
-        #map {
-            width: 100%;
-            height: 300px;
-            margin-top: 20px;
         }
 
         /* Footer */
@@ -84,100 +92,110 @@
             background-color: #34495e;
             color: white;
         }
-        
-        body {
-            background-color: Rgb(106, 140, 175);
-        }
     </style>
-
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <img src="{% static 'my_photo.jpg' %}" style="width: 60px; height: 60px;" />
+        <img src="{% static 'my_photo.jpg' %}" style="width:60px;height:60px;border-radius:50%;"/>
         <h1>Mfundo Dlamini</h1>
-        <p>IT Support | Web Developer | Computer Technician </p>
+        <p>Aspiring Junior Full‑Stack Developer | Entry‑Level</p>
     </header>
 
-    <!-- Qualifications Section -->
+    <!-- Objective -->
     <section>
-        <h2>Qualifications</h2>
+        <h2>Objective</h2>
+        <p>Motivated and results‑driven developer seeking an entry‑level position as a Junior Full‑Stack Developer. Bringing one year of freelance experience building web, mobile, and desktop applications, and actively expanding skills in Java and Kotlin for system‑level app development.</p>
+    </section>
+
+    <!-- Education -->
+    <section>
+        <h2>Education & Certifications</h2>
         <ul>
-            <li>General Certificate of Secondary Education</li>
+            <li><strong>Regenesis Institute</strong> — BSc Computer Science (2024, studies interrupted due to fees)</li>
+            <li><strong>IBM Full‑Stack Cloud Developer Certificate</strong> (Coursera) — In Progress</li>
+            <li><strong>General Certificate of Secondary Education</strong></li>
         </ul>
     </section>
 
-    <!-- Skillsets Section -->
+    <!-- Technical Skills -->
     <section>
-        <h2>Skillsets</h2>
+        <h2>Technical Skills</h2>
         <ul>
-            <li>Programming: Python, JavaScript, SQL</li>
-            <li>Data Analysis: Pandas, NumPy, Matplotlib</li>
-            <li>Web Development: HTML, CSS, JavaScript, Python, Flask, Django, React</li>
+            <li><strong>Programming Languages:</strong> Python, JavaScript, Java, Kotlin, SQL (PostgreSQL)</li>
+            <li><strong>Web Development:</strong> HTML5, CSS3, JavaScript, React, Vue</li>
+            <li><strong>Mobile Development:</strong> React Native, Expo</li>
+            <li><strong>Desktop Development:</strong> React Native for Windows, Electron</li>
+            <li><strong>Backend & API:</strong> Django, Django REST Framework, AWS Amplify, JWT (RESTful best practices)</li>
+            <li><strong>Cloud & Hosting:</strong> AWS (Amplify, EC2), Contabo, PythonAnywhere, Heroku</li>
         </ul>
     </section>
 
     <!-- Job Experience Section -->
     <section>
-        <h2>Job Experience</h2>
-        <ul>
-            <li><strong>Web Development:</strong> Made websites for business </li>
-            <li><strong>Computer Technician:</strong> Worked as computer Technician (Hardware and software upgrade and maintenance)</li> 
-        </ul>
+      <h2>Job Experience</h2>
+      <ul>
+        <li><strong>Freelance Developer (2024–Present):</strong> Over one year of hands‑on experience designing and building custom software solutions.</li>
+        <li>
+          <strong>FindTaxi (Santaco South Africa):</strong>
+          Built a mobile app connecting taxi drivers and passengers, featuring:
+          <ul>
+            <li>Parcel delivery with unique tracking codes</li>
+            <li>In‑app messaging and voice calls</li>
+            <li><a href="https://www.findtexi.com" target="_blank">Live Demo</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>TeamKonekt (Groom Boutique):</strong>
+          Developed an internal communications platform enabling:
+          <ul>
+            <li>Issue reporting and status tracking</li>
+            <li>Task management and follow‑up</li>
+            <li>Anonymous suggestions and announcements</li>
+            <li><a href="https://www.teamkonekt.com" target="_blank">Live Demo</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>P2P VPN App (In Progress):</strong>
+          Peer‑to‑peer VPN for secure network sharing over distance.
+        </li>
+        <li>
+          <strong>Websites & Desktop Apps:</strong>
+          <ul>
+            <li>Designed and deployed websites (e.g., <a href="https://www.bothakgabjamahlako.com" target="_blank">bothakgabjamahlako.com</a>)</li>
+            <li>Created an e‑commerce desktop management app for retailers (communications, ads, images, stock control)</li>
+          </ul>
+        </li>
+      </ul>
     </section>
 
-    <!-- Contact Form -->
-    <section>
+    <!-- Contact Me -->
+    <section id="contact">
         <h2>Contact Me</h2>
+        <ul class="contact-info">
+            <li>Email: <a href="mailto:mfundoknox@gmail.com">mfundoknox@gmail.com</a></li>
+            <li>LinkedIn: <a href="https://www.linkedin.com/in/mfundo-dlamini" target="_blank">Mfundo Dlamini</a></li>
+            <li>WhatsApp: <a href="https://wa.me/27761353762" target="_blank">+27 76 135 3762</a></li>
+        </ul>
         <form action="#" method="POST">
             {% csrf_token %}
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your name..." required>
+            <input type="text" id="name" name="name" placeholder="Your name…" required>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Your email..." required>
+            <input type="email" id="email" name="email" placeholder="Your email…" required>
 
             <label for="message">Message:</label>
-            <textarea id="message" name="message" placeholder="Write your message..." rows="5" required></textarea>
+            <textarea id="message" name="message" placeholder="Write your message…" rows="5" required></textarea>
 
-            <input type="submit" value="Send Message"> 
-            <!-- Display messages -->
-           {% if messages %}
-           <div>
-           {% for message in messages %}
-           <div 
-            style="
-                padding: 10px; 
-                margin: 10px 0; 
-                border-radius: 5px; 
-                background-color: {% if message.tags == 'success' %} #d4edda {% else %} #f8d7da {% endif %}; 
-                color: {% if message.tags == 'success' %} #155724 {% else %} #721c24 {% endif %}; 
-                border: 1px solid {% if message.tags == 'success' %} #c3e6cb {% else %} #f5c6cb {% endif %};">
-            {{ message }}
-           </div>
-           {% endfor %}
-           </div>
-           {% endif %}
-
+            <input type="submit" value="Send Message">
         </form>
-        
     </section>
-
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3635.9835617111266!2d29.4773598753534!3d-24.312208478291225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDE4JzQ0LjAiUyAyOcKwMjgnNDcuOCJF!5e0!3m2!1sen!2sza!4v1737528497374!5m2!1sen!2sza" 
-            width="90%" 
-            height="40%" 
-            style="border:0; border-radius: 8px;" 
-            allowfullscreen="" 
-            loading="lazy">
-        </iframe>
-    </div>
 
     <!-- Footer -->
     <footer>
-        <p><a href="https://github.com/Mfundo-code" style="color: white; text-decoration: none;">Mfundo-code@//github.com</a></p>
+        <p><a href="https://github.com/Mfundo-code" style="color:white;text-decoration:none;">github.com/Mfundo-code</a></p>
     </footer>
 
 </body>
