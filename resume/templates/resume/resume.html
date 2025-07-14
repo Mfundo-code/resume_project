@@ -4,199 +4,637 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Resume</title>
+    <title>Mfundo Dlamini - Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Basic styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #6A8CAFB0;
+        /* Modern color scheme */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #27ae60;
+            --light: #ecf0f1;
+            --dark: #1a2530;
+            --background: #f5f7fa;
+        }
+        
+        /* Base styles */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6A8CAF 0%, #4A6B8A 100%);
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 20px;
+        }
+        
+        /* Header styling */
         header {
-            background-color: #34495e;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px 30px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
         }
-        h1 { margin: 0; }
-
-        /* Section styling */
-        section {
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 800px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        h2 { color: #34495e; margin-top: 0; }
-
-        /* List styling */
-        ul { list-style: none; padding: 0; }
-        ul li { margin: 5px 0; padding: 10px; background-color: #ecf0f1; border-radius: 5px; }
-
-        /* Contact styling */
-        section#contact {
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-text {
             text-align: center;
         }
-        section#contact ul.contact-info {
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 10px 0 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            color: var(--light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Section styling */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 25px;
+        }
+        
+        .section-header h2 {
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-header i {
+            font-size: 1.3rem;
+        }
+        
+        .section-content {
+            padding: 25px;
+        }
+        
+        /* List styling */
+        ul {
             list-style: none;
-            padding: 0;
+        }
+        
+        li {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        li:hover {
+            background-color: #e9f7fe;
+            transform: translateX(5px);
+            border-left-color: var(--accent);
+        }
+        
+        /* Project styling */
+        .project {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .project:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .project h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .project ul {
+            margin-left: 20px;
+        }
+        
+        .project ul li {
+            background: transparent;
+            border-left: none;
+            padding: 5px 0;
+            margin-bottom: 5px;
+        }
+        
+        /* Contact styling */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: #e9f7fe;
+            border-radius: 50px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            color: white;
+        }
+        
+        .contact-item:hover a {
+            color: white;
+        }
+        
+        .contact-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .contact-item i {
+            font-size: 1.2rem;
+        }
+        
+        form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        
+        .form-group {
             margin-bottom: 20px;
         }
-        section#contact ul.contact-info li {
-            background: none;
-            padding: 5px 0;
-        }
-        section#contact ul.contact-info li a {
-            color: #34495e;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        section#contact form {
-            margin: 0 auto;
-            max-width: 600px;
-            text-align: left;
-        }
-        section#contact label {
+        
+        label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
         }
-        section#contact input,
-        section#contact textarea {
+        
+        input, textarea {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
-        section#contact input[type="submit"] {
-            background-color: #34495e;
+        
+        input:focus, textarea:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            width: auto;
-            padding: 10px 20px;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
         }
-        section#contact input[type="submit"]:hover {
-            background-color: #27ae60;
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+            background: linear-gradient(to right, var(--secondary), var(--accent));
         }
-
-        /* Footer */
-        footer {
+        
+        /* GitHub Button Styles */
+        .github-container {
             text-align: center;
-            padding: 20px;
-            background-color: #34495e;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
+            border-radius: 15px;
+            max-width: 1000px;
+            margin: 30px auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .github-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .github-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, #4078c0 0%, #333 100%);
+        }
+        
+        .github-button:active {
+            transform: translateY(2px);
+        }
+        
+        .github-button i {
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .github-button:hover i {
+            transform: rotate(10deg) scale(1.2);
+        }
+        
+        .github-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.6s;
+        }
+        
+        .github-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-item {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .section-content {
+                padding: 20px 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .github-button {
+                padding: 14px 25px;
+                font-size: 1rem;
+            }
+            
+            .github-button i {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        section {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .github-container {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Delay animations for visual effect */
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.3s; }
+        section:nth-child(4) { animation-delay: 0.4s; }
+        section:nth-child(5) { animation-delay: 0.5s; }
+        .github-container { animation-delay: 0.7s; }
+        
+        /* Project link styling */
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .project-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        .project-link i {
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-
-    <!-- Header -->
+    <!-- Header with Profile Photo - FIXED with Django static tag -->
     <header>
-        <img src="{% static 'my_photo.jpg' %}" style="width:60px;height:60px;border-radius:50%;"/>
-        <h1>Mfundo Dlamini</h1>
-        <p>Aspiring Junior Full‑Stack Developer | Entry‑Level</p>
+        <div class="profile-container">
+            <div class="profile-photo">
+                <img src="{% static 'my_photo.jpg' %}" alt="Mfundo Dlamini">
+            </div>
+            <div class="profile-text">
+                <h1>Mfundo Dlamini</h1>
+                <p>Aspiring Junior Full‑Stack Developer | Entry‑Level</p>
+            </div>
+        </div>
     </header>
 
-    <!-- Objective -->
-    <section>
-        <h2>Objective</h2>
-        <p>Motivated and results‑driven developer seeking an entry‑level position as a Junior Full‑Stack Developer. Bringing one year of freelance experience building web, mobile, and desktop applications, and actively expanding skills in Java and Kotlin for system‑level app development.</p>
-    </section>
+    <div class="container">
+        <!-- Objective -->
+        <section>
+            <div class="section-header">
+                <h2><i class="fas fa-bullseye"></i> Objective</h2>
+            </div>
+            <div class="section-content">
+                <p>Motivated and results‑driven developer seeking an entry‑level position as a Junior Full‑Stack Developer. Bringing one year of freelance experience building web, mobile, and desktop applications, and actively expanding skills in Java and Kotlin for system‑level app development.</p>
+            </div>
+        </section>
 
-    <!-- Education -->
-    <section>
-        <h2>Education & Certifications</h2>
-        <ul>
-            <li><strong>Regenesis Institute</strong> — BSc Computer Science (2024, studies interrupted due to fees)</li>
-            <li><strong>IBM Full‑Stack Cloud Developer Certificate</strong> (Coursera) — In Progress</li>
-            <li><strong>General Certificate of Secondary Education</strong></li>
-        </ul>
-    </section>
+        <!-- Education -->
+        <section>
+            <div class="section-header">
+                <h2><i class="fas fa-graduation-cap"></i> Education & Certifications</h2>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Regenesis Institute</strong> — BSc Computer Science (2024, studies interrupted due to fees)</li>
+                    <li><strong>IBM Full‑Stack Cloud Developer Certificate</strong> (Coursera) — In Progress</li>
+                    <li><strong>General Certificate of Secondary Education</strong></li>
+                </ul>
+            </div>
+        </section>
 
-    <!-- Technical Skills -->
-    <section>
-        <h2>Technical Skills</h2>
-        <ul>
-            <li><strong>Programming Languages:</strong> Python, JavaScript, Java, Kotlin, SQL (PostgreSQL)</li>
-            <li><strong>Web Development:</strong> HTML5, CSS3, JavaScript, React, Vue</li>
-            <li><strong>Mobile Development:</strong> React Native, Expo</li>
-            <li><strong>Desktop Development:</strong> React Native for Windows, Electron</li>
-            <li><strong>Backend & API:</strong> Django, Django REST Framework, AWS Amplify, JWT (RESTful best practices)</li>
-            <li><strong>Cloud & Hosting:</strong> AWS (Amplify, EC2), Contabo, PythonAnywhere, Heroku</li>
-        </ul>
-    </section>
+        <!-- Technical Skills -->
+        <section>
+            <div class="section-header">
+                <h2><i class="fas fa-laptop-code"></i> Technical Skills</h2>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Programming Languages:</strong> Python, JavaScript, Java, Kotlin, SQL (PostgreSQL)</li>
+                    <li><strong>Web Development:</strong> HTML5, CSS3, JavaScript, React, Vue</li>
+                    <li><strong>Mobile Development:</strong> React Native, Expo</li>
+                    <li><strong>Desktop Development:</strong> React Native for Windows, Electron</li>
+                    <li><strong>Backend & API:</strong> Django, Django REST Framework, AWS Amplify, JWT (RESTful best practices)</li>
+                    <li><strong>Cloud & Hosting:</strong> AWS (Amplify, EC2), Contabo, PythonAnywhere, Heroku</li>
+                </ul>
+            </div>
+        </section>
 
-    <!-- Job Experience Section -->
-    <section>
-      <h2>Job Experience</h2>
-      <ul>
-        <li><strong>Freelance Developer (2024–Present):</strong> Over one year of hands‑on experience designing and building custom software solutions.</li>
-        <li>
-          <strong>FindTaxi (Santaco South Africa):</strong>
-          Built a mobile app connecting taxi drivers and passengers, featuring:
-          <ul>
-            <li>Parcel delivery with unique tracking codes</li>
-            <li>In‑app messaging and voice calls</li>
-            <li><a href="https://www.findtexi.com" target="_blank">Live Demo</a></li>
-          </ul>
-        </li>
-        <li>
-          <strong>TeamKonekt (Groom Boutique):</strong>
-          Developed an internal communications platform enabling:
-          <ul>
-            <li>Issue reporting and status tracking</li>
-            <li>Task management and follow‑up</li>
-            <li>Anonymous suggestions and announcements</li>
-            <li><a href="https://www.teamkonekt.com" target="_blank">Live Demo</a></li>
-          </ul>
-        </li>
-        <li>
-          <strong>P2P VPN App (In Progress):</strong>
-          Peer‑to‑peer VPN for secure network sharing over distance.
-        </li>
-        <li>
-          <strong>Websites & Desktop Apps:</strong>
-          <ul>
-            <li>Designed and deployed websites (e.g., <a href="https://www.bothakgabjamahlako.com" target="_blank">bothakgabjamahlako.com</a>)</li>
-            <li>Created an e‑commerce desktop management app for retailers (communications, ads, images, stock control)</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
+        <!-- Job Experience -->
+        <section>
+            <div class="section-header">
+                <h2><i class="fas fa-briefcase"></i> Job Experience</h2>
+            </div>
+            <div class="section-content">
+                <div class="project">
+                    <h3>Freelance Developer (2024–Present)</h3>
+                    <p>Over one year of hands‑on experience designing and building custom software solutions.</p>
+                </div>
+                
+                <div class="project">
+                    <h3>FindTaxi (Santaco South Africa)</h3>
+                    <p>Built a mobile app connecting taxi drivers and passengers, featuring:</p>
+                    <ul>
+                        <li>Parcel delivery with unique tracking codes</li>
+                        <li>In‑app messaging and voice calls</li>
+                    </ul>
+                    <a href="https://www.findtexi.com" target="_blank" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> View Live Demo
+                    </a>
+                </div>
+                
+                <div class="project">
+                    <h3>TeamKonekt (Groom Boutique)</h3>
+                    <p>Developed an internal communications platform enabling:</p>
+                    <ul>
+                        <li>Issue reporting and status tracking</li>
+                        <li>Task management and follow‑up</li>
+                        <li>Anonymous suggestions and announcements</li>
+                    </ul>
+                    <a href="https://www.teamkonekt.com" target="_blank" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> View Live Demo
+                    </a>
+                </div>
+                
+                <div class="project">
+                    <h3>P2P VPN App (In Progress)</h3>
+                    <p>Peer‑to‑peer VPN for secure network sharing over distance.</p>
+                </div>
+                
+                <div class="project">
+                    <h3>Websites & Desktop Apps</h3>
+                    <ul>
+                        <li>Designed and deployed websites (e.g., <a href="https://www.bothakgabjamahlako.com" target="_blank" class="project-link" style="display: inline-flex; padding: 4px 12px; margin-left: 5px;">
+                            <i class="fas fa-external-link-alt"></i> bothakgabjamahlako.com
+                        </a>)</li>
+                        <li>Created an e‑commerce desktop management app for retailers (communications, ads, images, stock control)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-    <!-- Contact Me -->
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <ul class="contact-info">
-            <li>Email: <a href="mailto:mfundoknox@gmail.com">mfundoknox@gmail.com</a></li>
-            <li>LinkedIn: <a href="https://www.linkedin.com/in/mfundo-dlamini" target="_blank">Mfundo Dlamini</a></li>
-            <li>WhatsApp: <a href="https://wa.me/27761353762" target="_blank">+27 76 135 3762</a></li>
-        </ul>
-        <form action="#" method="POST">
-            {% csrf_token %}
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your name…" required>
+        <!-- Contact Me -->
+        <section>
+            <div class="section-header">
+                <h2><i class="fas fa-envelope"></i> Contact Me</h2>
+            </div>
+            <div class="section-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <a href="mailto:mfundoknox@gmail.com">
+                            <i class="fas fa-envelope"></i> mfundoknox@gmail.com
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="https://www.linkedin.com/in/mfundo-dlamini" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="https://wa.me/27761353762" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    
+                    <button type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </section>
+    </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Your email…" required>
+    <!-- GitHub Profile Section -->
+    <div class="github-container">
+        <h3>Explore My Projects and Contributions</h3>
+        <p>Check out my GitHub profile to see my latest work and code repositories</p>
+        <a href="https://github.com/Mfundo-code" target="_blank" class="github-button">
+            <i class="fab fa-github"></i> Visit My GitHub Profile
+        </a>
+        <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">© 2024 Mfundo Dlamini | Aspiring Full-Stack Developer</p>
+    </div>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" placeholder="Write your message…" rows="5" required></textarea>
-
-            <input type="submit" value="Send Message">
-        </form>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p><a href="https://github.com/Mfundo-code" style="color:white;text-decoration:none;">github.com/Mfundo-code</a></p>
-    </footer>
-
+    <script>
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if(name && email && message) {
+                // Show success message
+                alert(`Thank you ${name}! Your message has been sent successfully. I'll get back to you soon at ${email}.`);
+                
+                // Reset form
+                this.reset();
+            } else {
+                alert('Please fill in all fields before submitting.');
+            }
+        });
+        
+        // Add animation to contact items on hover
+        const contactItems = document.querySelectorAll('.contact-item');
+        contactItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'scale(1.05)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
