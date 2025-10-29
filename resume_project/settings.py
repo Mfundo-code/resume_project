@@ -1,19 +1,16 @@
 from pathlib import Path
 import os
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Define REACT_BUILD_DIR before using it
+REACT_BUILD_DIR = BASE_DIR / 'frontend' / 'build'  # Adjust this path to match your React build directory
 
 SECRET_KEY = 'django-insecure-g2%nwr+b08==c8f3g2+m-f$5%=716f()9v$(5v%c#parxouut-'
 
+DEBUG = True
 
-DEBUG = False
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
+ALLOWED_HOSTS = ['mfundodev.com', 'www.mfundodev.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,7 +39,7 @@ ROOT_URLCONF = 'resume_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [REACT_BUILD_DIR],  # Also add this if you want to serve React's index.html
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,17 +54,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'resume_project.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -84,24 +76,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # For static files in the project folder
+    REACT_BUILD_DIR / 'static',
 ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -112,17 +98,18 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mfundoknox@gmail.com'
 EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'
 
-
 DEFAULT_FROM_EMAIL = 'mfundoknox@gmail.com'
 SERVER_EMAIL = 'mfundoknox@gmail.com'
 
-CORS_ALLOW_ALL_ORIGINS = True
+# Remove duplicate CORS_ALLOW_ALL_ORIGINS
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "https://mfundodev.com",
     "https://www.mfundodev.com",
 ]
 
-
-ALLOWED_HOSTS = ['mfundodev.com', 'www.mfundodev.com', 'localhost', '127.0.0.1']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # This line was missing a proper ending

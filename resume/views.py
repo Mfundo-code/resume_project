@@ -1,39 +1,59 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages  # ADD THIS IMPORT
-from django.core.mail import send_mail  # ADD THIS IMPORT
-from django.conf import settings  # ADD THIS IMPORT
-from .models import ContactMessage
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.db.models import Prefetch
+from .models import Category, Project
+from .serializers import CategorySerializer, ProjectSerializer, ProjectListSerializer
 
-def resume(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    ViewSet for viewing categories.
+    Public access - no authentication required.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+    @action(detail=True, methods=['get'])
+    def projects(self, request, pk=None):
+        """Get all projects for a specific category"""
+        category = self.get_object()
+        projects = category.projects.all()
+        serializer = ProjectListSerializer(projects, many=True, context={'request': request})
+        return Response(serializer.data)
 
-        # Basic validation
-        if not name or not email or not message:
-            messages.error(request, "All fields are required. Please fill out the form completely.")
-        else:
-            # Save the message to the database
-            ContactMessage.objects.create(name=name, email=email, message=message)
-            
-            # Send email notification
-            try:
-                send_mail(
-                    subject=f"New Contact Form Submission from {name}",
-                    message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[settings.EMAIL_HOST_USER],
-                    fail_silently=False,
-                )
-            except Exception as e:
-                # Log error but don't show to user
-                print(f"Failed to send email: {e}")
-            
-            # Add a success message
-            messages.success(request, f"Thank you, {name}! Your message has been sent successfully.")
-            
-            # Redirect to avoid re-submission on page refresh
-            return redirect("resume")
-
-    return render(request, 'resume/resume.html')
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    ViewSet for viewing projects.
+    Public access - no authentication required.
+    """
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProjectListSerializer
+        return ProjectSerializer
+    
+    @action(detail=False, methods=['get'])
+    def featured(self, request):
+        """Get featured projects"""
+        featured_projects = self.get_queryset().filter(featured=True)
+        serializer = self.get_serializer(featured_projects, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def by_category(self, request):
+        """Get all projects grouped by category"""
+        categories = Category.objects.prefetch_related(
+            Prefetch('projects', queryset=Project.objects.all())
+        ).all()
+        
+        result = []
+        for category in categories:
+            category_data = CategorySerializer(category, context={'request': request}).data
+            projects = category.projects.all()
+            projects_data = ProjectListSerializer(projects, many=True, context={'request': request}).data
+            category_data['projects'] = projects_data
+            result.append(category_data)
+        
+        return Response(result)
