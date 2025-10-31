@@ -3,12 +3,13 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Define REACT_BUILD_DIR before using it
-REACT_BUILD_DIR = BASE_DIR / 'frontend' / 'build'  # Adjust this path to match your React build directory
+# React build directory (adjust if your frontend build is elsewhere)
+REACT_BUILD_DIR = BASE_DIR / 'frontend' / 'build'
 
 SECRET_KEY = 'django-insecure-g2%nwr+b08==c8f3g2+m-f$5%=716f()9v$(5v%c#parxouut-'
 
-DEBUG = True
+# Set to False in production
+DEBUG = False
 
 ALLOWED_HOSTS = ['mfundodev.com', 'www.mfundodev.com', 'localhost', '127.0.0.1']
 
@@ -19,11 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'resume',
     'corsheaders',
 ]
 
 MIDDLEWARE = [
+    # corsheaders middleware should be as high as possible
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -39,7 +42,7 @@ ROOT_URLCONF = 'resume_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [REACT_BUILD_DIR],  # Also add this if you want to serve React's index.html
+        'DIRS': [REACT_BUILD_DIR],  # use this to serve React's index.html if desired
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,32 +80,39 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+# Set to your preferred timezone; update if needed
+TIME_ZONE = 'Africa/Johannesburg'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# If you build your React app into frontend/build, include its static dir here
 STATICFILES_DIRS = [
     REACT_BUILD_DIR / 'static',
 ]
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email (keep credentials secure - prefer environment variables in production)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mfundoknox@gmail.com'
-EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'
+EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'  # <-- consider moving this to an env var
 
 DEFAULT_FROM_EMAIL = 'mfundoknox@gmail.com'
 SERVER_EMAIL = 'mfundoknox@gmail.com'
 
-# Remove duplicate CORS_ALLOW_ALL_ORIGINS
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS configuration
+# IMPORTANT: Do NOT set CORS_ALLOW_ALL_ORIGINS = True when you need cookies/credentials.
+# Use CORS_ALLOWED_ORIGINS + CORS_ALLOW_CREDENTIALS = True instead.
+CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -111,5 +121,34 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.mfundodev.com",
 ]
 
+# Allow credentials (cookies) to be sent cross-origin
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow the X-CSRFToken header from the frontend
+from corsheaders.defaults import default_headers
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'x-csrftoken',
+]
+
+# REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
+# CSRF trusted origins must include the scheme
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://mfundodev.com',
+    'https://www.mfundodev.com',
+]
+
+# Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'  # This line was missing a proper ending
+MEDIA_ROOT = BASE_DIR / 'media'

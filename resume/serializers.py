@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Project
+from .models import Category, Project, Contact
 
 class CategorySerializer(serializers.ModelSerializer):
     project_count = serializers.SerializerMethodField()
@@ -40,3 +40,9 @@ class ProjectListSerializer(serializers.ModelSerializer):
     
     def get_tools_list(self, obj):
         return obj.get_tools_list()
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['id', 'name', 'email', 'message', 'created_at', 'is_read']
+        read_only_fields = ['id', 'created_at', 'is_read']

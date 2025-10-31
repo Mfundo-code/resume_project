@@ -1,9 +1,11 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Prefetch
-from .models import Category, Project
-from .serializers import CategorySerializer, ProjectSerializer, ProjectListSerializer
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Category, Project, Contact
+from .serializers import CategorySerializer, ProjectSerializer, ProjectListSerializer, ContactSerializer
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -57,3 +59,66 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
             result.append(category_data)
         
         return Response(result)
+
+class ContactViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for handling contact form submissions.
+    """
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    http_method_names = ['post']  # Only allow POST for contact submissions
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            # Save the contact message
+            contact = serializer.save()
+            
+            # Send email notification
+            try:
+                subject = f"New Contact Message from {contact.name}"
+                message = f"""
+                You have received a new contact message
+                from your portfolio website:
+                
+                Name: {contact.name}
+                Email: {contact.email}
+                Message: {contact.message}
+                
+                Received at: {contact.created_at}
+                """
+                
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.DEFAULT_FROM_EMAIL],  # Send to yourself
+                    fail_silently=False,
+                )
+                
+                # Also send confirmation email to the user
+                user_subject = "Thank you for your message!"
+                user_message = f"""
+                Hi {contact.name},
+                
+                Thank you for reaching out to me! 
+                I'll get back to you as soon as possible.
+                
+                Best regards,
+                Mfundo Dlamini
+                """
+                
+                send_mail(
+                    user_subject,
+                    user_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [contact.email],
+                    fail_silently=False,
+                )
+                
+            except Exception as e:
+                # Log the error but don't fail the request
+                print(f"Email sending failed: {e}")
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
