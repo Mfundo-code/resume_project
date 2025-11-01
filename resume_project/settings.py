@@ -100,18 +100,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email configuration
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-else:
-    # For production, save to database and log instead of sending
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+# Email (keep credentials secure - prefer environment variables in production)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mfundoknox@gmail.com'
-EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'
+EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'  # <-- consider moving this to an env var
+
 DEFAULT_FROM_EMAIL = 'mfundoknox@gmail.com'
 SERVER_EMAIL = 'mfundoknox@gmail.com'
 

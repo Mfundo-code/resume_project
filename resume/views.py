@@ -8,10 +8,7 @@ from .models import Category, Project, Contact
 from .serializers import CategorySerializer, ProjectSerializer, ProjectListSerializer, ContactSerializer
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    ViewSet for viewing categories.
-    Public access - no authentication required.
-    """
+   
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     
@@ -61,9 +58,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(result)
 
 class ContactViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for handling contact form submissions.
-    """
+  
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     http_method_names = ['post']  # Only allow POST for contact submissions
@@ -74,18 +69,22 @@ class ContactViewSet(viewsets.ModelViewSet):
             # Save the contact message
             contact = serializer.save()
             
-            # Send email notification
+            # Send email notification ONLY to admin (you) - no client confirmation
             try:
-                subject = f"New Contact Message from {contact.name}"
+                subject = f"New Portfolio Contact from {contact.name}"
                 message = f"""
                 You have received a new contact message
                 from your portfolio website:
                 
                 Name: {contact.name}
                 Email: {contact.email}
-                Message: {contact.message}
+                Message: 
+                {contact.message}
                 
                 Received at: {contact.created_at}
+                
+                ---
+                Please respond to this person!
                 """
                 
                 send_mail(
@@ -96,29 +95,16 @@ class ContactViewSet(viewsets.ModelViewSet):
                     fail_silently=False,
                 )
                 
-                # Also send confirmation email to the user
-                user_subject = "Thank you for your message!"
-                user_message = f"""
-                Hi {contact.name},
-                
-                Thank you for reaching out to me! 
-                I'll get back to you as soon as possible.
-                
-                Best regards,
-                Mfundo Dlamini
-                """
-                
-                send_mail(
-                    user_subject,
-                    user_message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [contact.email],
-                    fail_silently=False,
-                )
                 
             except Exception as e:
                 # Log the error but don't fail the request
-                print(f"Email sending failed: {e}")
+                print(f"Email forwarding failed: {e}")
             
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(
+                {
+                    'message': 'Message received successfully! I will get back to you soon.',
+                    'data': serializer.data
+                }, 
+                status=status.HTTP_201_CREATED
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
