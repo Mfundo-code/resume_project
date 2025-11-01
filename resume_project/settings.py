@@ -4,14 +4,14 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # React build directory (adjust if your frontend build is elsewhere)
-REACT_BUILD_DIR = BASE_DIR / 'frontend' / 'build'
+REACT_BUILD_DIR = BASE_DIR /'build'
 
 SECRET_KEY = 'django-insecure-g2%nwr+b08==c8f3g2+m-f$5%=716f()9v$(5v%c#parxouut-'
 
 # Set to False in production
 DEBUG = False
 
-ALLOWED_HOSTS = ['mfundodev.com', 'www.mfundodev.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['mfundodev.com', 'www.mfundodev.com', 'localhost', '207.180.201.93','127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,6 +29,8 @@ MIDDLEWARE = [
     # corsheaders middleware should be as high as possible
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    # WhiteNoise middleware should come after SecurityMiddleware and before all others
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
