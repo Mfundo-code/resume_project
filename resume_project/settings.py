@@ -9,7 +9,7 @@ REACT_BUILD_DIR = BASE_DIR /'build'
 SECRET_KEY = 'django-insecure-g2%nwr+b08==c8f3g2+m-f$5%=716f()9v$(5v%c#parxouut-'
 
 # Set to False in production
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['mfundodev.com', 'www.mfundodev.com', 'localhost', '207.180.201.93','127.0.0.1']
 
@@ -100,14 +100,18 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email (keep credentials secure - prefer environment variables in production)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# Email configuration
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+else:
+    # For production, save to database and log instead of sending
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mfundoknox@gmail.com'
-EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'  # <-- consider moving this to an env var
-
+EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'
 DEFAULT_FROM_EMAIL = 'mfundoknox@gmail.com'
 SERVER_EMAIL = 'mfundoknox@gmail.com'
 
